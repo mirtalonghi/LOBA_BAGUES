@@ -69,67 +69,7 @@ nav {
 .card {
     margin: 10px; /* Espacio alrededor de cada tarjeta */
 }
-/* estilo para el card del carrito*/
-.cart-container {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            width: 300px;
-            padding: 20px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-        }
-        .cart-header {
-            font-size: 1.5em;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .product-list {
-            margin-bottom: 20px;
-        }
-        .product-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #ddd;
-        }
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-        }
-        .cart-total {
-            font-weight: bold;
-            text-align: right;
-            margin-top: 20px;
-        }
-        .checkout-button {
-            width: 100%;
-            padding: 10px;
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            font-size: 1em;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        .checkout-button:hover {
-            background-color: #218838;
-        }
-        .remove-button {
-            cursor: pointer;
-            color: red;
-            border: none;
-            background: none;
-            font-size: 1em;
-        }
+
 /* Estilos para el pie de página */
 footer {
     padding: 20px; /* Espacio interno */
@@ -170,10 +110,9 @@ footer button {
 }
 
 footer button:hover {
-    background-color: #0056b3; /* Color más oscuro al pasar el mouse*/
+    background-color: #0056b3; /* Color más oscuro al pasar el mouse */
 }
 
-/* Estilos para las imágenes de redes sociales */
 footer .RSocial {
     width: 40px; /* Ancho de los iconos */
     margin: 5px; /* Espacio alrededor de cada icono */
@@ -181,20 +120,16 @@ footer .RSocial {
 
 /* Media Queries para pantallas medianas (tablets) */
 @media (max-width: 768px) {
-    /* Ajustamos el tamaño del logo */
     .Logo {
         max-width: 60px;
     }
-    /* Las tarjetas se apilan verticalmente */
     .main_cards {
         flex-direction: column;
         align-items: center;
     }
-    /* Ajustamos el ancho de las tarjetas */
     .card {
         width: 80%; /* Las tarjetas ocupan el 80% del ancho */
     }
-    /* Ajustamos la altura de las imágenes del carrusel */
     .carousel-item img {
         height: 300px;
     }
@@ -202,28 +137,60 @@ footer .RSocial {
 
 /* Media Queries para pantallas pequeñas (celulares) */
 @media (max-width: 480px) {
-    /* Ajustamos el tamaño del logo */
     .Logo {
         max-width: 50px;
     }
-    /* Ajustamos el ancho de las tarjetas */
     .card {
         width: 90%; /* Las tarjetas ocupan el 90% del ancho */
     }
-    /* Ajustamos la altura de las imágenes del carrusel */
     .carousel-item img {
         height: 200px;
     }
-    /* Ajustamos el tamaño del título */
     .Titulo {
         font-size: 20px;
     }
-    /* Ajustamos los títulos en el pie de página */
     footer form h1, footer h1 {
         font-size: 20px;
     }
-    /* Ajustamos el tamaño del enlace en el pie de página */
     footer a {
         font-size: 16px;
     }
+}
+
+/* Estilos para el carrito */
+.modal-content {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.modal-header {
+    background-color: #343a40;
+    color: white;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#carritoItems li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+}
+
+#carritoItems {
+    list-style-type: none;
+    padding: 0;
+}
+
+#carritoItems li button {
+    margin-left: 10px;
+}
+
+#total {
+    font-weight: bold;
+    margin-top: 20px;
 }
