@@ -30,6 +30,12 @@ export const auth = betterAuth({
           ...(process.env.VERCEL_PROJECT_PRODUCTION_URL
             ? [`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`]
             : []),
+          // Vercel asigna varios alias de producción al mismo proyecto y solo uno
+          // coincide con VERCEL_PROJECT_PRODUCTION_URL. Autorizamos los alias
+          // exactos de este proyecto para que el login funcione desde cualquiera.
+          "https://loba-vagues.vercel.app",
+          "https://loba-bagues-mirtas-projects.vercel.app",
+          "https://loba-bagues-git-main-mirtas-projects.vercel.app",
         ]
       : []),
   ],
