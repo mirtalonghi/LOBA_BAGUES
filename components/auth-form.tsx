@@ -27,7 +27,12 @@ export function AuthForm({ mode }: { mode: "sign-in" | "sign-up" }) {
         : await authClient.signIn.email({ email, password })
 
       if (resultado.error) {
-        setError("No pudimos validar esos datos. Revisá el email y la contraseña.")
+        const detalle = resultado.error.message || resultado.error.statusText
+        setError(
+          detalle
+            ? `No pudimos completar la operación: ${detalle}`
+            : "No pudimos validar esos datos. Revisá el email y la contraseña.",
+        )
         return
       }
 
