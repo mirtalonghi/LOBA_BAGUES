@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { Minus, Plus, X } from "lucide-react"
 import { useCart } from "@/components/cart-provider"
 import { formatPrecio } from "@/lib/products"
+import { WHATSAPP_NUMERO } from "@/lib/site-config"
 
 export function CartDrawer() {
   const { items, total, abierto, setAbierto, quitar, cambiarCantidad, vaciar } = useCart()
@@ -26,8 +27,23 @@ export function CartDrawer() {
       setMensaje("Tu carrito está vacío.")
       return
     }
+
+    const lineas = items.map(
+      (item) => `• ${item.nombre} x${item.cantidad} — ${formatPrecio(item.precio * item.cantidad)}`,
+    )
+    const texto = [
+      "¡Hola! Quiero hacer este pedido:",
+      "",
+      ...lineas,
+      "",
+      `Total: ${formatPrecio(total)}`,
+    ].join("\n")
+
+    const url = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(texto)}`
+    window.open(url, "_blank", "noopener,noreferrer")
+
     vaciar()
-    setMensaje("Gracias por tu compra.")
+    setMensaje("Te llevamos a WhatsApp para confirmar tu pedido.")
   }
 
   return (
