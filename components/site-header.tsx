@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { ShoppingBag, UserCircle2 } from "lucide-react"
+import { LayoutGrid, ShoppingBag, UserCircle2 } from "lucide-react"
 import { useCart } from "@/components/cart-provider"
 
 export function SiteHeader() {
@@ -32,6 +32,19 @@ export function SiteHeader() {
         </Link>
 
         <div className="flex items-center gap-1">
+          <Link
+            href="/#productos"
+            className="flex size-10 items-center justify-center rounded-full transition-colors hover:bg-background/10 sm:hidden"
+          >
+            <LayoutGrid className="size-5" aria-hidden="true" />
+            <span className="sr-only">Categorías</span>
+          </Link>
+          <Link
+            href="/#productos"
+            className="mr-4 hidden text-sm uppercase tracking-[0.2em] text-background/80 transition-colors hover:text-background sm:block"
+          >
+            Categorías
+          </Link>
           <Link
             href="/quienes-somos"
             className="mr-2 hidden text-sm uppercase tracking-[0.2em] text-background/80 transition-colors hover:text-background sm:block"
