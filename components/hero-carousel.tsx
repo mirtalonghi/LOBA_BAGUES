@@ -88,9 +88,9 @@ export function HeroCarousel({ ofertas = [] }: { ofertas?: Product[] }) {
     <section
       aria-label={ofertas.length > 0 ? "Productos en oferta" : "Destacados"}
       aria-roledescription="carrusel"
-      className="relative isolate overflow-hidden"
+      className="relative isolate overflow-hidden bg-background"
     >
-      <div className="relative h-[460px] w-full sm:h-[480px] lg:h-[560px]">
+      <div className="relative h-72 w-full sm:h-96 lg:h-[480px]">
         {slides.map((item, index) => (
           <Image
             key={item.key}
@@ -105,50 +105,6 @@ export function HeroCarousel({ ofertas = [] }: { ofertas?: Product[] }) {
             }`}
           />
         ))}
-        <div
-          className="absolute inset-0 bg-gradient-to-t from-foreground/85 via-foreground/45 to-foreground/10"
-          aria-hidden="true"
-        />
-
-        <div
-          aria-live="polite"
-          className="relative flex h-full flex-col items-start justify-end gap-3 px-6 pb-16 text-background sm:px-10 lg:px-16"
-        >
-          <p className="rounded-full bg-accent px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-accent-foreground">
-            {slide.etiqueta}
-          </p>
-          <h2 className="max-w-xl font-serif text-3xl leading-tight text-balance sm:text-4xl lg:text-5xl">
-            {slide.titulo}
-          </h2>
-          {slide.texto ? (
-            <p className="line-clamp-3 max-w-md text-sm leading-relaxed text-background/85 text-pretty sm:text-base">
-              {slide.texto}
-            </p>
-          ) : null}
-
-          {slide.precio !== undefined ? (
-            <p className="flex items-baseline gap-3">
-              {slide.precioLista !== undefined && slide.precioLista > slide.precio ? (
-                <span className="text-sm text-background/70 line-through sm:text-base">
-                  <span className="sr-only">Precio anterior: </span>
-                  {formatPrecio(slide.precioLista)}
-                </span>
-              ) : null}
-              <span className="font-serif text-3xl sm:text-4xl">
-                <span className="sr-only">Precio de oferta: </span>
-                {formatPrecio(slide.precio)}
-              </span>
-            </p>
-          ) : null}
-
-          <a
-            href={ofertas.length > 0 ? "#ofertas" : "#productos"}
-            className="mt-2 inline-flex items-center rounded-full bg-background px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
-          >
-            {ofertas.length > 0 ? "Comprar oferta" : "Ver productos"}
-          </a>
-        </div>
-
         {total > 1 ? (
           <>
             <button
@@ -168,7 +124,7 @@ export function HeroCarousel({ ofertas = [] }: { ofertas?: Product[] }) {
               <span className="sr-only">Siguiente</span>
             </button>
 
-            <div className="absolute bottom-6 left-1/2 flex -translate-x-1/2 items-center gap-2">
+            <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full bg-foreground/40 px-3 py-2">
               {slides.map((item, index) => (
                 <button
                   key={item.key}
@@ -176,7 +132,7 @@ export function HeroCarousel({ ofertas = [] }: { ofertas?: Product[] }) {
                   onClick={() => setActivo(index)}
                   aria-current={index === indice}
                   className={`h-1.5 rounded-full transition-all ${
-                    index === indice ? "w-8 bg-background" : "w-3 bg-background/50"
+                    index === indice ? "w-8 bg-background" : "w-3 bg-background/60"
                   }`}
                 >
                   <span className="sr-only">{`Ir a ${item.titulo}`}</span>
@@ -185,6 +141,45 @@ export function HeroCarousel({ ofertas = [] }: { ofertas?: Product[] }) {
             </div>
           </>
         ) : null}
+      </div>
+
+      <div aria-live="polite" className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-4 py-5 sm:px-8">
+        <div className="flex items-center justify-between gap-3 border-b border-border pb-4">
+          <p className="whitespace-nowrap rounded-full bg-accent px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-accent-foreground sm:text-xs">
+            {slide.etiqueta}
+          </p>
+          <a
+            href={ofertas.length > 0 ? "#ofertas" : "#productos"}
+            className="inline-flex shrink-0 items-center whitespace-nowrap rounded-full bg-foreground px-4 py-2.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-background transition-colors hover:bg-accent hover:text-accent-foreground sm:px-6 sm:text-xs"
+          >
+            {ofertas.length > 0 ? "Comprar oferta" : "Ver productos"}
+          </a>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <h2 className="font-serif text-2xl leading-tight text-foreground text-balance sm:text-3xl lg:text-4xl">
+            {slide.titulo}
+          </h2>
+          {slide.texto ? (
+            <p className="line-clamp-3 text-sm leading-relaxed text-muted-foreground text-pretty sm:text-base">
+              {slide.texto}
+            </p>
+          ) : null}
+          {slide.precio !== undefined ? (
+            <p className="flex items-baseline gap-3 pt-1">
+              {slide.precioLista !== undefined && slide.precioLista > slide.precio ? (
+                <span className="text-sm text-muted-foreground line-through sm:text-base">
+                  <span className="sr-only">Precio anterior: </span>
+                  {formatPrecio(slide.precioLista)}
+                </span>
+              ) : null}
+              <span className="font-serif text-2xl text-foreground sm:text-3xl">
+                <span className="sr-only">Precio de oferta: </span>
+                {formatPrecio(slide.precio)}
+              </span>
+            </p>
+          ) : null}
+        </div>
       </div>
     </section>
   )
