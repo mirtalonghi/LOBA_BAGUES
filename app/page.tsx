@@ -26,10 +26,10 @@ export default async function Page({
 
   return (
     <main>
-      <HeroCarousel />
+      <HeroCarousel ofertas={promos} />
 
       {promos.length > 0 ? (
-        <section className="mx-auto w-full max-w-6xl px-4 pt-16">
+        <section id="ofertas" className="mx-auto w-full max-w-6xl scroll-mt-24 px-4 pt-16">
           <div className="mb-8 flex flex-col gap-2">
             <p className="text-[11px] uppercase tracking-[0.35em] text-accent">Promociones</p>
             <h2 className="font-serif text-3xl text-balance sm:text-4xl">Precios especiales</h2>
