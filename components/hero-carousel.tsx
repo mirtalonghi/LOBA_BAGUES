@@ -4,7 +4,7 @@ import Image from "next/image"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 
-import { formatPrecio, type Product } from "@/lib/products"
+import type { Product } from "@/lib/products"
 
 type Slide = {
   key: string
@@ -166,42 +166,18 @@ export function HeroCarousel({ ofertas = [] }: { ofertas?: Product[] }) {
         ) : null}
       </div>
 
-      <div aria-live="polite" className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-4 py-5 sm:px-8">
-        <div className="flex items-center justify-between gap-3 border-b border-border pb-4">
-          <p className="whitespace-nowrap rounded-full bg-accent px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-accent-foreground sm:text-xs">
+      <div aria-live="polite" className="bg-gold">
+        <h2 className="sr-only">{slide.titulo}</h2>
+        <div className="mx-auto flex w-full max-w-3xl items-center justify-between gap-3 px-4 py-2 sm:px-8">
+          <p className="whitespace-nowrap rounded-full bg-background px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-gold-foreground sm:text-xs">
             {slide.etiqueta}
           </p>
           <a
             href={ofertas.length > 0 ? "#ofertas" : "#productos"}
-            className="inline-flex shrink-0 items-center whitespace-nowrap rounded-full bg-foreground px-4 py-2.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-background transition-colors hover:bg-accent hover:text-accent-foreground sm:px-6 sm:text-xs"
+            className="inline-flex shrink-0 items-center whitespace-nowrap rounded-full bg-foreground px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-background transition-colors hover:bg-gold-foreground sm:px-6 sm:text-xs"
           >
             {ofertas.length > 0 ? "Comprar oferta" : "Ver productos"}
           </a>
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <h2 className="font-serif text-2xl leading-tight text-foreground text-balance sm:text-3xl lg:text-4xl">
-            {slide.titulo}
-          </h2>
-          {slide.texto ? (
-            <p className="line-clamp-3 text-sm leading-relaxed text-muted-foreground text-pretty sm:text-base">
-              {slide.texto}
-            </p>
-          ) : null}
-          {slide.precio !== undefined ? (
-            <p className="flex items-baseline gap-3 pt-1">
-              {slide.precioLista !== undefined && slide.precioLista > slide.precio ? (
-                <span className="text-sm text-muted-foreground line-through sm:text-base">
-                  <span className="sr-only">Precio anterior: </span>
-                  {formatPrecio(slide.precioLista)}
-                </span>
-              ) : null}
-              <span className="font-serif text-2xl text-foreground sm:text-3xl">
-                <span className="sr-only">Precio de oferta: </span>
-                {formatPrecio(slide.precio)}
-              </span>
-            </p>
-          ) : null}
         </div>
       </div>
     </section>
