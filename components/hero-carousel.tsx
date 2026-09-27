@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 
 import { formatPrecio, type Product } from "@/lib/products"
@@ -82,7 +82,26 @@ export function HeroCarousel({ ofertas = [] }: { ofertas?: Product[] }) {
     if (total < 2) return
     const id = setInterval(siguiente, 6000)
     return () => clearInterval(id)
-  }, [siguiente, total])
+  }, [siguiente, total, activo])
+
+  const inicioToque = useRef<{ x: number; y: number } | null>(null)
+
+  const alTocar = (event: React.TouchEvent) => {
+    const toque = event.touches[0]
+    inicioToque.current = { x: toque.clientX, y: toque.clientY }
+  }
+
+  const alSoltar = (event: React.TouchEvent) => {
+    const inicio = inicioToque.current
+    inicioToque.current = null
+    if (!inicio || total < 2) return
+    const toque = event.changedTouches[0]
+    const dx = toque.clientX - inicio.x
+    const dy = toque.clientY - inicio.y
+    if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return
+    if (dx < 0) siguiente()
+    else anterior()
+  }
 
   return (
     <section
@@ -90,7 +109,11 @@ export function HeroCarousel({ ofertas = [] }: { ofertas?: Product[] }) {
       aria-roledescription="carrusel"
       className="relative isolate overflow-hidden bg-background"
     >
-      <div className="relative h-72 w-full sm:h-96 lg:h-[480px]">
+      <div
+        onTouchStart={alTocar}
+        onTouchEnd={alSoltar}
+        className="relative h-72 w-full touch-pan-y select-none sm:h-96 lg:h-[480px]"
+      >
         {slides.map((item, index) => (
           <Image
             key={item.key}

@@ -2,7 +2,6 @@ import Link from "next/link"
 
 import { getCatalogo } from "@/app/actions/products"
 import { HeroCarousel } from "@/components/hero-carousel"
-import { CategoryMenu } from "@/components/category-menu"
 import { ProductGrid } from "@/components/product-grid"
 import { CATEGORIAS } from "@/lib/products"
 
@@ -46,8 +45,14 @@ export default async function Page({
           </h2>
         </div>
 
-        {categoriasConProductos.length > 0 ? (
-          <CategoryMenu categorias={categoriasConProductos} activa={categoriaActiva} />
+        {categoriaActiva ? (
+          <Link
+            href="/#productos"
+            scroll={false}
+            className="mb-8 inline-flex text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground underline underline-offset-4 transition-colors hover:text-foreground"
+          >
+            Ver todos los productos
+          </Link>
         ) : null}
 
         {catalogo.length === 0 ? (
