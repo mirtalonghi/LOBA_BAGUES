@@ -7,6 +7,4 @@
 //   9   = indica celular
 //   11  = código de área sin el 0
 //   22334455 = número sin el 15
-//
-// >>> CAMBIÁ ESTE VALOR POR TU NÚMERO REAL <<<
-export const WHATSAPP_NUMERO = "5491100000000"
+export const WHATSAPP_NUMERO = "5491123981879"
