@@ -10,11 +10,15 @@ import { WHATSAPP_NUMERO } from "@/lib/site-config"
 export function CartDrawer() {
   const { items, total, abierto, setAbierto, quitar, cambiarCantidad, vaciar } = useCart()
   const [mensaje, setMensaje] = useState<string | null>(null)
+  const [confirmando, setConfirmando] = useState(false)
 
   useEffect(() => {
     if (!abierto) return
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setAbierto(false)
+      if (event.key === "Escape") {
+        setConfirmando(false)
+        setAbierto(false)
+      }
     }
     window.addEventListener("keydown", onKey)
     return () => window.removeEventListener("keydown", onKey)
@@ -22,12 +26,22 @@ export function CartDrawer() {
 
   if (!abierto) return null
 
+  const cerrar = () => {
+    setConfirmando(false)
+    setMensaje(null)
+    setAbierto(false)
+  }
+
   const comprar = () => {
     if (items.length === 0) {
       setMensaje("Tu carrito está vacío.")
       return
     }
+    setMensaje(null)
+    setConfirmando(true)
+  }
 
+  const finalizarCompra = () => {
     const lineas = items.map(
       (item) => `• ${item.nombre} x${item.cantidad} — ${formatPrecio(item.precio * item.cantidad)}`,
     )
@@ -43,6 +57,7 @@ export function CartDrawer() {
     window.open(url, "_blank", "noopener,noreferrer")
 
     vaciar()
+    setConfirmando(false)
     setMensaje("Te llevamos a WhatsApp para confirmar tu pedido.")
   }
 
@@ -51,7 +66,7 @@ export function CartDrawer() {
       <button
         type="button"
         aria-label="Cerrar carrito"
-        onClick={() => setAbierto(false)}
+        onClick={cerrar}
         className="absolute inset-0 bg-foreground/50"
       />
       <aside
@@ -64,7 +79,7 @@ export function CartDrawer() {
           <h2 className="font-serif text-lg text-card-foreground">Tu carrito</h2>
           <button
             type="button"
-            onClick={() => setAbierto(false)}
+            onClick={cerrar}
             className="flex size-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted"
           >
             <X className="size-5" aria-hidden="true" />
@@ -134,13 +149,55 @@ export function CartDrawer() {
             <span>Total</span>
             <span className="text-primary">{formatPrecio(total)}</span>
           </div>
-          <button
-            type="button"
-            onClick={comprar}
-            className="w-full rounded-full bg-primary px-5 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-primary-foreground transition-colors hover:bg-foreground"
-          >
-            Comprar
-          </button>
+          {confirmando ? (
+            <div
+              role="alertdialog"
+              aria-labelledby="confirmar-titulo"
+              aria-describedby="confirmar-texto"
+              className="flex flex-col gap-3 rounded-lg border border-primary/30 bg-muted p-4"
+            >
+              <p id="confirmar-titulo" className="font-serif text-base text-card-foreground">
+                ¿Finalizar la compra?
+              </p>
+              <p id="confirmar-texto" className="text-sm leading-relaxed text-muted-foreground">
+                {`Vas a finalizar tu compra por ${formatPrecio(total)}. Te llevaremos a WhatsApp para enviar el pedido y coordinar el pago y la entrega.`}
+              </p>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => setConfirmando(false)}
+                  className="flex-1 rounded-full border border-border px-4 py-2.5 text-xs font-semibold uppercase tracking-[0.15em] text-card-foreground transition-colors hover:bg-card"
+                >
+                  Volver
+                </button>
+                <button
+                  type="button"
+                  autoFocus
+                  onClick={finalizarCompra}
+                  className="flex-1 rounded-full bg-primary px-4 py-2.5 text-xs font-semibold uppercase tracking-[0.15em] text-primary-foreground transition-colors hover:bg-foreground"
+                >
+                  Confirmar
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-2">
+              <button
+                type="button"
+                onClick={comprar}
+                className="w-full rounded-full bg-primary px-5 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-primary-foreground transition-colors hover:bg-foreground"
+              >
+                Comprar
+              </button>
+              <button
+                type="button"
+                onClick={cerrar}
+                className="w-full rounded-full border border-primary px-5 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-primary transition-colors hover:bg-muted"
+              >
+                Seguir comprando
+              </button>
+            </div>
+          )}
         </div>
       </aside>
     </div>
