@@ -133,7 +133,7 @@ export function HeroCarousel({ ofertas = [] }: { ofertas?: Product[] }) {
             <button
               type="button"
               onClick={anterior}
-              className="absolute left-3 top-1/2 flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-background/80 text-foreground transition-colors hover:bg-background"
+              className="absolute left-3 top-1/2 hidden size-10 md:flex -translate-y-1/2 items-center justify-center rounded-full bg-background/80 text-foreground transition-colors hover:bg-background"
             >
               <ChevronLeft className="size-5" aria-hidden="true" />
               <span className="sr-only">Anterior</span>
@@ -141,7 +141,7 @@ export function HeroCarousel({ ofertas = [] }: { ofertas?: Product[] }) {
             <button
               type="button"
               onClick={siguiente}
-              className="absolute right-3 top-1/2 flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-background/80 text-foreground transition-colors hover:bg-background"
+              className="absolute right-3 top-1/2 hidden size-10 md:flex -translate-y-1/2 items-center justify-center rounded-full bg-background/80 text-foreground transition-colors hover:bg-background"
             >
               <ChevronRight className="size-5" aria-hidden="true" />
               <span className="sr-only">Siguiente</span>
