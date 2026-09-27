@@ -4,6 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { ShoppingBag, UserCircle2 } from "lucide-react"
 import { useCart } from "@/components/cart-provider"
+import { CategoryDrawer } from "@/components/category-drawer"
 
 export function SiteHeader() {
   const { cantidadTotal, setAbierto } = useCart()
@@ -14,6 +15,8 @@ export function SiteHeader() {
         aria-label="Principal"
         className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-3"
       >
+        <div className="flex items-center gap-2">
+        <CategoryDrawer />
         <Link href="/" className="flex items-center gap-3">
           <Image
             src="/image/Logo-Loba.jpg"
@@ -30,6 +33,7 @@ export function SiteHeader() {
             </span>
           </span>
         </Link>
+        </div>
 
         <div className="flex items-center gap-1">
           <Link
